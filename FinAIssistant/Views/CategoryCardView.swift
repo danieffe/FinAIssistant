@@ -33,12 +33,18 @@ struct CategoryCardView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         ForEach(budgetManager.transactions.filter { $0.category == category.name }) { transaction in
                             VStack(alignment: .leading) {
-                                Text(transaction.date)
+                                HStack {
+                                    Text(transaction.description) // Mostra la descrizione
+                                        .font(.subheadline)
+                                        .foregroundColor(.white)
+                                    Spacer()
+                                    Text("$\(transaction.amount, specifier: "%.2f")") // Mostra l'importo accanto
+                                        .font(.subheadline)
+                                        .foregroundColor(.white)
+                                }
+                                Text(transaction.date) // Mostra la data sotto
                                     .font(.caption)
-                                    .foregroundColor(.white)
-                                Text("$\(transaction.amount, specifier: "%.2f")")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.white.opacity(0.8))
                             }
                             .padding(.horizontal)
                         }
