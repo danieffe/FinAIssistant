@@ -9,27 +9,30 @@ import SwiftUI
 
 class BudgetManager: ObservableObject {
     @Published var categories: [Category] = [
-        Category(name: "Grocery", color: .yellow),
-        Category(name: "Entertainment", color: .green),
-        Category(name: "Rent", color: .red),
-        Category(name: "Bills", color: .blue),
-        Category(name: "Transport", color: .orange)
+        Category(name: "Food", color: .yellow),
+        Category(name: "Transportation", color: .orange),
+        Category(name: "Healthcare", color: .green),
+        Category(name: "Housing", color: .red),
+        Category(name: "Entertainment", color: .blue),
+        Category(name: "Miscellaneous", color: .purple)
     ]
     
     @Published var transactions: [Transaction] = [
-        Transaction(category: "Grocery", amount: 45.50, date: "Dec 1"),
-        Transaction(category: "Entertainment", amount: 120.00, date: "Dec 2"),
-        Transaction(category: "Rent", amount: 800.00, date: "Dec 3"),
-        Transaction(category: "Bills", amount: 60.00, date: "Dec 4"),
-        Transaction(category: "Transport", amount: 20.00, date: "Dec 5")
+        Transaction(category: "Food", amount: 45.50, date: "Dec 1", description: "Supermarket"),
+        Transaction(category: "Transportation", amount: 20.00, date: "Dec 2", description: "Taxi Fare"),
+        Transaction(category: "Healthcare", amount: 80.00, date: "Dec 3", description: "Doctor Visit"),
+        Transaction(category: "Housing", amount: 800.00, date: "Dec 4", description: "Monthly Rent"),
+        Transaction(category: "Entertainment", amount: 50.00, date: "Dec 5", description: "Cinema Ticket"),
+        Transaction(category: "Miscellaneous", amount: 30.00, date: "Dec 6", description: "Gift")
     ]
     
     @Published var budgetLimits: [String: Double] = [
-        "Grocery": 500,
+        "Food": 500,
+        "Transportation": 150,
+        "Healthcare": 200,
+        "Housing": 1000,
         "Entertainment": 300,
-        "Rent": 1000,
-        "Bills": 200,
-        "Transport": 150
+        "Miscellaneous": 100
     ]
     
     func getProgress(forCategory category: String) -> CGFloat {
@@ -41,6 +44,13 @@ class BudgetManager: ObservableObject {
         return CGFloat(min(totalSpent / limit, 1.0))
     }
 }
+
+
+
+
+
+
+
 
 
 

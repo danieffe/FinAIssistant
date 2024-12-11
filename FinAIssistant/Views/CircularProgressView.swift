@@ -49,11 +49,12 @@ struct CircularProgressView: View {
 struct CircularProgressView_Previews: PreviewProvider {
     static var previews: some View {
         CircularProgressView(categories: [
-            ProgressCategory(name: "Grocery", progress: 0.3, color: .yellow),
-            ProgressCategory(name: "Entertainment", progress: 0.2, color: .green),
-            ProgressCategory(name: "Rent", progress: 0.4, color: .red),
-            ProgressCategory(name: "Bills", progress: 0.1, color: .blue),
-            ProgressCategory(name: "Transport", progress: 0.6, color: .orange)
+            ProgressCategory(name: "Food", progress: 0.3, color: .yellow),
+            ProgressCategory(name: "Transportation", progress: 0.2, color: .orange),
+            ProgressCategory(name: "Healthcare", progress: 0.4, color: .green),
+            ProgressCategory(name: "Housing", progress: 0.1, color: .red),
+            ProgressCategory(name: "Entertainment", progress: 0.6, color: .blue),
+            ProgressCategory(name: "Miscellaneous", progress: 0.5, color: .purple)
         ])
     }
 }

@@ -12,5 +12,7 @@ struct Transaction: Identifiable {
     let category: String
     let amount: Double
     let date: String
+    let description: String // Aggiunta la descrizione
 }
+
 

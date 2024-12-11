@@ -30,11 +30,9 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // Creiamo un'istanza di BudgetManager per l'anteprima
-        let budgetManager = BudgetManager()
-        
-        return ContentView()
-            .environmentObject(budgetManager) // Passiamo il BudgetManager come EnvironmentObject
+        ContentView()
     }
 }
+
+
 
