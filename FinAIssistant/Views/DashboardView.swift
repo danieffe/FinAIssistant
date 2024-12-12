@@ -10,16 +10,33 @@ import SwiftUI
 struct DashboardView: View {
     @ObservedObject var budgetManager = BudgetManager()
 
+    // Funzione per ottenere la data nel formato "THURSDAY, 12 DEC"
+    func formattedDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, dd MMM"
+        return formatter.string(from: Date()).uppercased() // Per ottenere il formato richiesto con la data in maiuscolo
+    }
+
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 ScrollView {
                     VStack {
+                        // Data sopra il titolo "Welcome Daniele", ridotto il padding per meno spazio
+                        Text(formattedDate())
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .padding([.top, .horizontal])
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top, -10) // Ridotto il padding tra la data e il titolo
+
+                        // Titolo "Expenses Progress", con il padding superiore ridotto per meno spazio
                         Text("Expenses Progress")
                             .font(.headline)
                             .padding([.top, .horizontal])
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityLabel("Expenses Progress, shows the overall progress of your spending across all categories.")
+                            .padding(.top, -10) // Ridotto il padding superiore per avvicinare di più il titolo
 
                         // Card per il grafico e le uscite mensili
                         VStack {
@@ -92,7 +109,7 @@ struct DashboardView: View {
                     .padding(.top, -11)
                 }
             }
-            .navigationTitle("Welcome Daniele")
+            .navigationTitle("Welcome Daniele") // Titolo di navigazione
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
