@@ -9,14 +9,11 @@ import SwiftUI
 
 struct DashboardView: View {
     @ObservedObject var budgetManager = BudgetManager()
-    @State private var selectedCategory: String? = nil // Gestisce la categoria selezionata
-    @State private var showSheet = false // Gestisce la visibilità del menu a selezione rapida
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack { // Ridotto lo spazio
-
+                VStack {
                     Text("Expenses Progress")
                         .font(.headline)
                         .padding([.top, .horizontal]) // Rimosso il padding dal basso
@@ -44,7 +41,7 @@ struct DashboardView: View {
                     ScrollView {
                         VStack(spacing: 10) { // Spazio ridotto tra le card
                             ForEach(budgetManager.categories) { category in
-                                CategoryCardView(category: category, selectedCategory: $selectedCategory)
+                                CategoryCardView(category: category)
                                     .environmentObject(budgetManager)
                             }
                         }
@@ -55,26 +52,24 @@ struct DashboardView: View {
                 .padding(.top, -11) // Spazio aggiuntivo solo in cima per avvicinare il contenuto
             }
             .navigationTitle("Welcome Daniele") // Nuovo titolo della nav
-            .navigationBarItems(trailing: Button(action: {
-                showSheet.toggle() // Mostra il menu a selezione rapida
-            }) {
-                Image(systemName: "plus.circle.fill") // Icona "+" del bottone
-                    .font(.title)
-                    .foregroundColor(.blue)
-            })
-            .actionSheet(isPresented: $showSheet) {
-                ActionSheet(
-                    title: Text("Select Action"),
-                    buttons: [
-                        .default(Text("New Expense")) {
-                            // Aggiungi logica per gestire nuova spesa
-                        },
-                        .default(Text("New Category")) {
-                            // Aggiungi logica per gestire nuova categoria
-                        },
-                        .cancel()
-                    ]
-                )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button(action: {
+                            // Azione per aggiungere una nuova spesa
+                        }) {
+                            Label("New Expense", systemImage: "plus.circle")
+                        }
+                        Button(action: {
+                            // Azione per aggiungere una nuova categoria
+                        }) {
+                            Label("New Category", systemImage: "folder.badge.plus")
+                        }
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                    }
+                }
             }
         }
     }
