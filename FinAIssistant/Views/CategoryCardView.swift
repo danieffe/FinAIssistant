@@ -40,7 +40,7 @@ struct CategoryCardView: View {
                                     .font(.body)
                                     .foregroundColor(.white)
                                     .lineLimit(1)
-                                    .accessibilityLabel("Transaction: \(transaction.description), amount is \(transaction.amount, specifier: "%.2f") euros") // Legge la descrizione della transazione
+                                    .accessibilityLabel("Transaction: \(transaction.description)") // Legge la descrizione della transazione
 
                                 // Data della transazione
                                 Text(transaction.date)
