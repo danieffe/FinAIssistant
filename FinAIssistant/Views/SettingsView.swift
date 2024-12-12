@@ -33,7 +33,7 @@ struct SettingsView: View {
                                 .frame(width: 60, alignment: .trailing)
                                 .font(.body)
                                 .foregroundColor(.secondary)
-                                .accessibilityLabel("Budget limit value ")
+                                .accessibilityLabel("Budget limit value")
                                 .accessibilityValue("\(Int(budgetManager.budgetLimits[category.name] ?? 0)) euros")
                         }
                     }
@@ -42,6 +42,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Budget Settings")
         }
+        .navigationViewStyle(.stack) // Forza lo stile stack su iPad
     }
 }
 
