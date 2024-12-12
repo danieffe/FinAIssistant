@@ -16,42 +16,76 @@ struct DashboardView: View {
                 VStack {
                     Text("Expenses Progress")
                         .font(.headline)
-                        .padding([.top, .horizontal]) // Rimosso il padding dal basso
-                        .frame(maxWidth: .infinity, alignment: .leading) // Allineato a sinistra
-                    
-                    // Grafico con cerchi concentrici
-                    CircularProgressView(categories: budgetManager.categories.map {
-                        ProgressCategory(
-                            name: $0.name,
-                            progress: budgetManager.getProgress(forCategory: $0.name),
-                            color: $0.color
-                        )
-                    })
-                    .frame(height: 300)
-                    .padding(.vertical, 10) // Spazio sopra e sotto il grafico
-                    .offset(x: -70) // Sposta il grafico leggermente a sinistra
-                    
-                    // Titolo delle categorie (allineato a sinistra)
+                        .padding([.top, .horizontal])
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Card per il grafico e le uscite mensili
+                    VStack {
+                        HStack {
+                            // Grafico
+                            CircularProgressView(categories: budgetManager.categories.map {
+                                ProgressCategory(
+                                    name: $0.name,
+                                    progress: budgetManager.getProgress(forCategory: $0.name),
+                                    color: $0.color
+                                )
+                            })
+                            .frame(height: 200)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                            // Informazioni sulle uscite mensili
+                            VStack(alignment: .leading) {
+                                Text("Total Monthly Expenses")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+
+                                Text("€0.00") // Placeholder per l'importo
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.primary)
+
+                                Spacer()
+
+                                HStack {
+                                    Image(systemName: "calendar")
+                                        .foregroundColor(.blue)
+                                    Text("December 2024") // Mese corrente
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            .padding(.leading, 10)
+                            .frame(maxWidth: 120, alignment: .leading) // Imposta una larghezza fissa
+                        }
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.white) // Colore della card
+                            .shadow(color: .gray.opacity(0.3), radius: 5, x: 2, y: 2)
+                    )
+                    .padding(.horizontal) // Margine laterale per separare dal bordo
+
                     Text("Categories")
                         .font(.headline)
-                        .padding([.horizontal]) // Solo padding orizzontale
-                        .frame(maxWidth: .infinity, alignment: .leading) // Allineato a sinistra
-                    
+                        .padding([.horizontal])
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
                     // Grande card scrollabile che contiene le categorie
                     ScrollView {
-                        VStack(spacing: 10) { // Spazio ridotto tra le card
+                        VStack(spacing: 10) {
                             ForEach(budgetManager.categories) { category in
                                 CategoryCardView(category: category)
                                     .environmentObject(budgetManager)
                             }
                         }
                     }
-                    .frame(height: 350) // Altezza della card
-                    .padding([.horizontal, .bottom]) // Rimosso padding in alto
+                    .frame(height: 350)
+                    .padding([.horizontal, .bottom])
                 }
-                .padding(.top, -11) // Spazio aggiuntivo solo in cima per avvicinare il contenuto
+                .padding(.top, -11)
             }
-            .navigationTitle("Welcome Daniele") // Nuovo titolo della nav
+            .navigationTitle("Welcome Daniele")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
@@ -80,3 +114,6 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView()
     }
 }
+
+
+
