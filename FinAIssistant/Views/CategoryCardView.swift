@@ -14,37 +14,49 @@ struct CategoryCardView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
+                // Categoria: quando l'utente clicca sulla categoria
                 Text(category.name)
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+                    .accessibilityLabel("Category \(category.name), displays transactions for the \(category.name) category") // Legge la categoria con una descrizione
+
+                // Limite del budget
                 Text("Budget Limit: \(Int(budgetManager.budgetLimits[category.name] ?? 0)) €")
                     .font(.subheadline)
                     .foregroundColor(.white)
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+                    .accessibilityLabel("Budget Limit for \(category.name) Category is \(Int(budgetManager.budgetLimits[category.name] ?? 0))") // Legge il limite del budget
+
                 // Mostra direttamente le transazioni
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(budgetManager.transactions.filter { $0.category == category.name }) { transaction in
                         HStack {
                             VStack(alignment: .leading) {
+                                // Descrizione della transazione
                                 Text(transaction.description)
                                     .font(.body)
                                     .foregroundColor(.white)
                                     .lineLimit(1)
+                                    .accessibilityLabel("Transaction: \(transaction.description), amount is \(transaction.amount, specifier: "%.2f") euros") // Legge la descrizione della transazione
+
+                                // Data della transazione
                                 Text(transaction.date)
                                     .font(.caption)
                                     .foregroundColor(.white.opacity(0.7))
+                                    .accessibilityLabel("Date: \(transaction.date)") // Legge la data
                             }
                             Spacer()
+                            // Importo della transazione
                             Text("\(transaction.amount, specifier: "%.2f") €")
                                 .font(.body)
                                 .foregroundColor(.white)
+                                .accessibilityLabel("Amount: \(transaction.amount, specifier: "%.2f") euros") // Legge l'importo
                         }
                         .padding(.horizontal)
+                        .accessibilityElement(children: .combine) // Combina la descrizione e l'importo della transazione in un unico elemento
                     }
                 }
             }
@@ -67,5 +79,3 @@ struct CategoryCardView_Previews: PreviewProvider {
             .padding()
     }
 }
-
-

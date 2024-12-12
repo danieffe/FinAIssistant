@@ -18,6 +18,7 @@ struct DashboardView: View {
                         .font(.headline)
                         .padding([.top, .horizontal])
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityLabel("Expenses Progress, shows the overall progress of your spending across all categories.") // Aggiunta descrizione al titolo
 
                     // Card per il grafico e le uscite mensili
                     VStack {
@@ -32,17 +33,20 @@ struct DashboardView: View {
                             })
                             .frame(height: 200)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityLabel("Spending progress chart for all categories.") // Descrizione del grafico
 
                             // Informazioni sulle uscite mensili
                             VStack(alignment: .leading) {
                                 Text("Total Monthly Expenses")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
+                                    .accessibilityLabel("Total monthly expenses overview.") // Descrizione totale uscite mensili
 
                                 Text("€0.00") // Placeholder per l'importo
                                     .font(.title)
                                     .fontWeight(.bold)
                                     .foregroundColor(.primary)
+                                    .accessibilityLabel("Total expenses amount is zero euros.") // Descrizione dell'importo
 
                                 Spacer()
 
@@ -52,6 +56,7 @@ struct DashboardView: View {
                                     Text("December 2024") // Mese corrente
                                         .font(.footnote)
                                         .foregroundColor(.gray)
+                                        .accessibilityLabel("Current month is December 2024.") // Descrizione mese corrente
                                 }
                             }
                             .padding(.leading, 10)
@@ -114,6 +119,7 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView()
     }
 }
+
 
 
 
