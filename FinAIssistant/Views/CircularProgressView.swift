@@ -9,10 +9,16 @@ import SwiftUI
 
 struct CircularProgressView: View {
     let categories: [ProgressCategory]
-    
+    @State private var animatedProgress: [CGFloat]
+
+    init(categories: [ProgressCategory]) {
+        self.categories = categories
+        _animatedProgress = State(initialValue: categories.map { _ in CGFloat(0) }) // inizializza i progressi animati a 0
+    }
+
     var body: some View {
         ZStack {
-            // Cerchio di base per ogni categoria con un gradiente meno chiaro
+            // Cerchio di base per ogni categoria con un gradiente più chiaro
             ForEach(0..<categories.count, id: \.self) { index in
                 let category = categories[index]
                 let lighterColor = category.color.opacity(0.5) // Un colore più chiaro ma meno trasparente
@@ -33,13 +39,19 @@ struct CircularProgressView: View {
                 
                 // Cerchio progressivo per ogni categoria
                 Circle()
-                    .trim(from: 0, to: category.progress) // Imposta la porzione da colorare
+                    .trim(from: 0, to: animatedProgress[index]) // Usa l'animazione progressiva
                     .stroke(
                         category.color,
                         style: StrokeStyle(lineWidth: 20, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90)) // Inizia il riempimento da ore 12
                     .frame(width: CGFloat(200 - (index * 30)), height: CGFloat(200 - (index * 30)))
+                    .onAppear {
+                        // Avvia l'animazione quando la vista appare
+                        withAnimation(.easeInOut(duration: 1.5)) {
+                            animatedProgress[index] = category.progress
+                        }
+                    }
             }
         }
         .frame(width: 200, height: 200)
@@ -58,3 +70,4 @@ struct CircularProgressView_Previews: PreviewProvider {
         ])
     }
 }
+
