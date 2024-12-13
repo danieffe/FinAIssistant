@@ -21,85 +21,82 @@ struct DashboardView: View {
 
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
-                ScrollView {
+            ScrollView { // Unica ScrollView per tutto il contenuto
+                VStack {
+                    // Data sopra il titolo "Welcome Daniele", ridotto il padding per meno spazio
+                    Text(formattedDate())
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .padding([.top, .horizontal])
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, -10)
+
+                    Text("Expenses Progress")
+                        .font(.headline)
+                        .padding([.top, .horizontal])
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, -10)
+
                     VStack {
-                        // Data sopra il titolo "Welcome Daniele", ridotto il padding per meno spazio
-                        Text(formattedDate())
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .padding([.top, .horizontal])
+                        HStack {
+                            CircularProgressView(categories: budgetManager.categories.map {
+                                ProgressCategory(
+                                    name: $0.name,
+                                    progress: budgetManager.getProgress(forCategory: $0.name),
+                                    color: $0.color
+                                )
+                            })
+                            .frame(height: 200)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, -10)
 
-                        Text("Expenses Progress")
-                            .font(.headline)
-                            .padding([.top, .horizontal])
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, -10)
+                            VStack(alignment: .leading) {
+                                Text("Total Monthly Expenses")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
 
-                        VStack {
-                            HStack {
-                                CircularProgressView(categories: budgetManager.categories.map {
-                                    ProgressCategory(
-                                        name: $0.name,
-                                        progress: budgetManager.getProgress(forCategory: $0.name),
-                                        color: $0.color
-                                    )
-                                })
-                                .frame(height: 200)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                Text("€0.00")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.primary)
 
-                                VStack(alignment: .leading) {
-                                    Text("Total Monthly Expenses")
-                                        .font(.subheadline)
+                                Spacer()
+
+                                HStack {
+                                    Image(systemName: "calendar")
+                                        .foregroundColor(.blue)
+                                    Text("December 2024")
+                                        .font(.footnote)
                                         .foregroundColor(.gray)
-
-                                    Text("€0.00")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.primary)
-
-                                    Spacer()
-
-                                    HStack {
-                                        Image(systemName: "calendar")
-                                            .foregroundColor(.blue)
-                                        Text("December 2024")
-                                            .font(.footnote)
-                                            .foregroundColor(.gray)
-                                    }
-                                }
-                                .padding(.leading, 10)
-                                .frame(maxWidth: 120, alignment: .leading)
-                            }
-                        }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.white)
-                                .shadow(color: .gray.opacity(0.3), radius: 5, x: 2, y: 2)
-                        )
-                        .padding(.horizontal)
-
-                        Text("Categories")
-                            .font(.headline)
-                            .padding([.horizontal])
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        ScrollView {
-                            VStack(spacing: 10) {
-                                ForEach(budgetManager.categories) { category in
-                                    CategoryCardView(category: category)
-                                        .environmentObject(budgetManager)
                                 }
                             }
+                            .padding(.leading, 10)
+                            .frame(maxWidth: 120, alignment: .leading)
                         }
-                        .frame(height: geometry.size.height - 280)
-                        .padding([.horizontal, .bottom])
                     }
-                    .padding(.top, -11)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.white)
+                            .shadow(color: .gray.opacity(0.3), radius: 5, x: 2, y: 2)
+                    )
+                    .padding(.horizontal)
+                    .padding(.bottom, 20) // Spazio extra sotto il grafico
+
+                    Text("Categories")
+                        .font(.headline)
+                        .padding([.horizontal])
+                        .padding(.top, -10) // Spazio extra sopra "Categories"
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    VStack(spacing: 10) {
+                        ForEach(budgetManager.categories) { category in
+                            CategoryCardView(category: category)
+                                .environmentObject(budgetManager)
+                        }
+                    }
+                    .padding([.horizontal, .bottom]) // Padding per le categorie
                 }
+                .padding(.top, -11)
             }
             .navigationTitle("Welcome Daniele")
             .toolbar {
