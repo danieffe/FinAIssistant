@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DashboardView: View {
     @ObservedObject var budgetManager = BudgetManager()
+    @State private var showNewExpenseSheet = false // Stato per il foglio delle spese
+    @State private var showNewCategorySheet = false // Stato per il foglio delle categorie
 
     // Funzione per ottenere la data nel formato "THURSDAY, 12 DEC"
     func formattedDate() -> String {
@@ -28,20 +30,16 @@ struct DashboardView: View {
                             .foregroundColor(.gray)
                             .padding([.top, .horizontal])
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, -10) // Ridotto il padding tra la data e il titolo
+                            .padding(.top, -10)
 
-                        // Titolo "Expenses Progress", con il padding superiore ridotto per meno spazio
                         Text("Expenses Progress")
                             .font(.headline)
                             .padding([.top, .horizontal])
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .accessibilityLabel("Expenses Progress, shows the overall progress of your spending across all categories.")
-                            .padding(.top, -10) // Ridotto il padding superiore per avvicinare di più il titolo
+                            .padding(.top, -10)
 
-                        // Card per il grafico e le uscite mensili
                         VStack {
                             HStack {
-                                // Grafico
                                 CircularProgressView(categories: budgetManager.categories.map {
                                     ProgressCategory(
                                         name: $0.name,
@@ -51,30 +49,25 @@ struct DashboardView: View {
                                 })
                                 .frame(height: 200)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .accessibilityLabel("Spending progress chart for all categories.")
 
-                                // Informazioni sulle uscite mensili
                                 VStack(alignment: .leading) {
                                     Text("Total Monthly Expenses")
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
-                                        .accessibilityLabel("Total monthly expenses overview.")
 
-                                    Text("€0.00") // Placeholder per l'importo
+                                    Text("€0.00")
                                         .font(.title)
                                         .fontWeight(.bold)
                                         .foregroundColor(.primary)
-                                        .accessibilityLabel("Total expenses amount is zero euros.")
 
                                     Spacer()
 
                                     HStack {
                                         Image(systemName: "calendar")
                                             .foregroundColor(.blue)
-                                        Text("December 2024") // Mese corrente
+                                        Text("December 2024")
                                             .font(.footnote)
                                             .foregroundColor(.gray)
-                                            .accessibilityLabel("Current month is December 2024.")
                                     }
                                 }
                                 .padding(.leading, 10)
@@ -94,7 +87,6 @@ struct DashboardView: View {
                             .padding([.horizontal])
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        // Grande card scrollabile che contiene le categorie
                         ScrollView {
                             VStack(spacing: 10) {
                                 ForEach(budgetManager.categories) { category in
@@ -103,34 +95,40 @@ struct DashboardView: View {
                                 }
                             }
                         }
-                        .frame(height: geometry.size.height - 280) // Imposta l'altezza in base alle dimensioni dello schermo
+                        .frame(height: geometry.size.height - 280)
                         .padding([.horizontal, .bottom])
                     }
                     .padding(.top, -11)
                 }
             }
-            .navigationTitle("Welcome Daniele") // Titolo di navigazione
+            .navigationTitle("Welcome Daniele")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
                         Button(action: {
-                            // Azione per aggiungere una nuova spesa
+                            showNewExpenseSheet = true
                         }) {
                             Label("New Expense", systemImage: "plus.circle")
                         }
                         Button(action: {
-                            // Azione per aggiungere una nuova categoria
+                            showNewCategorySheet = true
                         }) {
                             Label("New Category", systemImage: "folder.badge.plus")
                         }
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "plus.circle.fill")
                             .font(.title2)
                     }
                 }
             }
+            .sheet(isPresented: $showNewExpenseSheet) {
+                NewExpenseView(showNewExpenseSheet: $showNewExpenseSheet)
+            }
+            .sheet(isPresented: $showNewCategorySheet) {
+                NewCategoryView(showNewCategorySheet: $showNewCategorySheet)
+            }
         }
-        .navigationViewStyle(.stack) // Forza lo stile stack su iPad
+        .navigationViewStyle(.stack)
     }
 }
 
@@ -139,4 +137,3 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView()
     }
 }
-
