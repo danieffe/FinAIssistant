@@ -9,12 +9,12 @@ import SwiftUI
 
 class BudgetManager: ObservableObject {
     @Published var categories: [Category] = [
-        Category(name: "Food", color: .yellow),
-        Category(name: "Transportation", color: .orange),
-        Category(name: "Healthcare", color: .green),
-        Category(name: "Housing", color: .red),
-        Category(name: "Entertainment", color: .blue),
-        Category(name: "Miscellaneous", color: .purple)
+        Category(name: "Food", color: .yellow, iconName: "fork.knife"), // Posate
+        Category(name: "Transportation", color: .orange, iconName: "airplane"), // Aereo
+        Category(name: "Healthcare", color: .green, iconName: "heart.fill"), // Cuore (per la salute)
+        Category(name: "Housing", color: .red, iconName: "house.fill"), // Casa
+        Category(name: "Entertainment", color: .blue, iconName: "tv.fill"), // TV (per intrattenimento)
+        Category(name: "Miscellaneous", color: .purple, iconName: "ellipsis.circle.fill") // Miscellaneous (Ellisse)
     ]
     
     @Published var transactions: [Transaction] = [
@@ -44,6 +44,7 @@ class BudgetManager: ObservableObject {
         return CGFloat(min(totalSpent / limit, 1.0))
     }
 }
+
 
 
 

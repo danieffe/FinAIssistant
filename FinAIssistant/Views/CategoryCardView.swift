@@ -14,13 +14,18 @@ struct CategoryCardView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                // Categoria: quando l'utente clicca sulla categoria
-                Text(category.name)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .accessibilityLabel("Category \(category.name), displays transactions for the \(category.name) category") // Legge la categoria con una descrizione
+                // Icona e nome della categoria
+                HStack {
+                    Image(systemName: category.iconName) // Icona SF associata alla categoria
+                        .foregroundColor(.white)
+                        .font(.title2) // Imposta la dimensione dell'icona
+
+                    Text(category.name)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityLabel("Category \(category.name), displays transactions for the \(category.name) category") // Legge la categoria con una descrizione
+                }
 
                 // Limite del budget
                 Text("Budget Limit: \(Int(budgetManager.budgetLimits[category.name] ?? 0)) €")
@@ -73,7 +78,7 @@ struct CategoryCardView: View {
 
 struct CategoryCardView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryCardView(category: Category(name: "Food", color: .yellow))
+        CategoryCardView(category: Category(name: "Food", color: .yellow, iconName: "fork.knife"))
             .environmentObject(BudgetManager())
             .previewLayout(.sizeThatFits)
             .padding()
