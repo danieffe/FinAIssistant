@@ -27,6 +27,8 @@ class BudgetManager: ObservableObject {
         Transaction(category: "Miscellaneous", amount: 30.00, date: "Dec 6", description: "Gift")
     ]
     
+    @Published var showToast = false // Variabile per mostrare la notifica
+    
     @Published var budgetLimits: [String: Double] = [
         "Food": 500,
         "Transportation": 150,
@@ -46,26 +48,36 @@ class BudgetManager: ObservableObject {
     }
     
     func categorizeTransaction(description: String, amount: Double) -> String {
+        // Carica il modello CoreML
         let classifier = try! ExpenseClassifier()  // Carica il modello
         let input = ExpenseClassifierInput(Description: description)  // Crea l'input per il modello
         
+        // Definisci le categorie valide del tuo progetto
         let validCategories = ["Food", "Transportation", "Healthcare", "Housing", "Entertainment", "Miscellaneous"]
         
         do {
+            // Ottieni la predizione dal modello
             let predictionOutput = try classifier.prediction(input: input)
+            
+            // Debugging: Stampa l'output della predizione
+            print("Prediction Output: \(predictionOutput)")
+            
             let predictedCategory = predictionOutput.Category
             
+            // Verifica se la categoria predetta è una delle categorie valide
             if validCategories.contains(predictedCategory) {
+                print("Categoria predetta valida: \(predictedCategory)")
                 return predictedCategory
             } else {
-                return "Miscellaneous"
+                print("Categoria predetta non valida, classificata come Miscellaneous.")
+                return "Miscellaneous"  // Se non è valida, ritorna "Miscellaneous"
             }
         } catch {
             print("Errore durante la previsione: \(error)")
-            return "Miscellaneous"
+            return "Miscellaneous"  // Se c'è un errore, ritorna "Miscellaneous"
         }
     }
-    
+
     func addTransaction(description: String, amount: Double) {
         // Usa il modello per determinare la categoria della transazione
         let category = categorizeTransaction(description: description, amount: amount)
@@ -77,12 +89,20 @@ class BudgetManager: ObservableObject {
         
         let newTransaction = Transaction(category: category, amount: amount, date: date, description: description)
         
-        // Aggiungi la nuova transazione alla lista delle transazioni
-        DispatchQueue.main.async {
-            self.transactions.append(newTransaction)
-        }
-
+        // Inserisce la nuova transazione all'inizio della lista (non più append)
+        transactions.insert(newTransaction, at: 0)
+        
+        // Ordinare le transazioni per data (dal più recente al più vecchio)
+        transactions.sort { $0.date < $1.date }
+        
         print("Transaction added: \(newTransaction)") // Debug: Stampa la nuova transazione
+        
+        // Mostra la notifica per qualche secondo
+        showToast = true
+        
+        // Nascondi la notifica dopo 3 secondi
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.showToast = false
+        }
     }
 }
-

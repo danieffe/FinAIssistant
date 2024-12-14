@@ -8,10 +8,13 @@
 import SwiftUI
 
 @main
-struct FinAIssistantApp: App {
+struct YourApp: App {
+    @StateObject private var budgetManager = BudgetManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DashboardView()
+                .environmentObject(budgetManager)
         }
     }
 }
