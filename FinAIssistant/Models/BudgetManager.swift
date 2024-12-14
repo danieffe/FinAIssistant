@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
+import CoreML
 
 class BudgetManager: ObservableObject {
     @Published var categories: [Category] = [
-        Category(name: "Food", color: .yellow, iconName: "fork.knife"), // Posate
-        Category(name: "Transportation", color: .orange, iconName: "airplane"), // Aereo
-        Category(name: "Healthcare", color: .green, iconName: "heart.fill"), // Cuore (per la salute)
-        Category(name: "Housing", color: .red, iconName: "house.fill"), // Casa
-        Category(name: "Entertainment", color: .blue, iconName: "tv.fill"), // TV (per intrattenimento)
-        Category(name: "Miscellaneous", color: .purple, iconName: "ellipsis.circle.fill") // Miscellaneous (Ellisse)
+        Category(name: "Food", color: .yellow, iconName: "fork.knife"),
+        Category(name: "Transportation", color: .orange, iconName: "airplane"),
+        Category(name: "Healthcare", color: .green, iconName: "heart.fill"),
+        Category(name: "Housing", color: .red, iconName: "house.fill"),
+        Category(name: "Entertainment", color: .blue, iconName: "tv.fill"),
+        Category(name: "Miscellaneous", color: .purple, iconName: "ellipsis.circle.fill")
     ]
     
     @Published var transactions: [Transaction] = [
@@ -43,15 +44,45 @@ class BudgetManager: ObservableObject {
             .reduce(0, +)
         return CGFloat(min(totalSpent / limit, 1.0))
     }
+    
+    func categorizeTransaction(description: String, amount: Double) -> String {
+        let classifier = try! ExpenseClassifier()  // Carica il modello
+        let input = ExpenseClassifierInput(Description: description)  // Crea l'input per il modello
+        
+        let validCategories = ["Food", "Transportation", "Healthcare", "Housing", "Entertainment", "Miscellaneous"]
+        
+        do {
+            let predictionOutput = try classifier.prediction(input: input)
+            let predictedCategory = predictionOutput.Category
+            
+            if validCategories.contains(predictedCategory) {
+                return predictedCategory
+            } else {
+                return "Miscellaneous"
+            }
+        } catch {
+            print("Errore durante la previsione: \(error)")
+            return "Miscellaneous"
+        }
+    }
+    
+    func addTransaction(description: String, amount: Double) {
+        // Usa il modello per determinare la categoria della transazione
+        let category = categorizeTransaction(description: description, amount: amount)
+        
+        // Crea la transazione e aggiungila all'elenco
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        let date = dateFormatter.string(from: Date())
+        
+        let newTransaction = Transaction(category: category, amount: amount, date: date, description: description)
+        
+        // Aggiungi la nuova transazione alla lista delle transazioni
+        DispatchQueue.main.async {
+            self.transactions.append(newTransaction)
+        }
+
+        print("Transaction added: \(newTransaction)") // Debug: Stampa la nuova transazione
+    }
 }
-
-
-
-
-
-
-
-
-
-
 

@@ -12,6 +12,8 @@ struct NewExpenseView: View {
     @State private var description = ""
     @State private var amount = ""
 
+    @EnvironmentObject var budgetManager: BudgetManager // Aggiungi la dipendenza al BudgetManager
+
     var body: some View {
         NavigationView {
             Form {
@@ -33,8 +35,11 @@ struct NewExpenseView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        // Azione per salvare la nuova spesa
-                        print("Expense Saved: \(description), \(amount)")
+                        // Aggiungi la transazione usando il BudgetManager
+                        if let amountValue = Double(amount), !description.isEmpty {
+                            print("Saving transaction with description: \(description) and amount: \(amount)") // Debug: Stampa la descrizione e l'importo
+                            budgetManager.addTransaction(description: description, amount: amountValue)
+                        }
                         showNewExpenseSheet = false
                     }
                     .disabled(description.isEmpty || amount.isEmpty)
@@ -47,6 +52,6 @@ struct NewExpenseView: View {
 struct NewExpenseView_Previews: PreviewProvider {
     static var previews: some View {
         NewExpenseView(showNewExpenseSheet: .constant(true))
+            .environmentObject(BudgetManager()) // Aggiungi l'oggetto BudgetManager all'ambiente
     }
 }
-
