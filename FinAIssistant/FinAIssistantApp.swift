@@ -13,7 +13,7 @@ struct YourApp: App {
 
     var body: some Scene {
         WindowGroup {
-            DashboardView()
+            ContentView()
                 .environmentObject(budgetManager)
         }
     }
