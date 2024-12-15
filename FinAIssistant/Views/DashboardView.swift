@@ -11,12 +11,21 @@ struct DashboardView: View {
     @EnvironmentObject var budgetManager: BudgetManager  // Usa EnvironmentObject
     @State private var showNewExpenseSheet = false // Stato per il foglio delle spese
     @State private var showNewCategorySheet = false // Stato per il foglio delle categorie
+    @State private var showCalendarPopup = false  // Stato per il popup del calendario
+    @State private var selectedMonth = Date()     // Stato per la data selezionata
 
     // Funzione per ottenere la data nel formato "THURSDAY, 12 DEC"
     func formattedDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, dd MMM"
         return formatter.string(from: Date()).uppercased() // Per ottenere il formato richiesto con la data in maiuscolo
+    }
+
+    // Funzione per formattare mese e anno dalla data
+    func formattedMonthYear(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter.string(from: date)
     }
 
     var body: some View {
@@ -63,9 +72,37 @@ struct DashboardView: View {
                                     Spacer()
 
                                     HStack {
-                                        Image(systemName: "calendar")
-                                            .foregroundColor(.blue)
-                                        Text("December 2024")
+                                        Button(action: {
+                                            showCalendarPopup.toggle() // Mostra o nasconde il popup
+                                        }) {
+                                            Image(systemName: "calendar")
+                                                .foregroundColor(.blue)
+                                        }
+                                        .popover(isPresented: $showCalendarPopup) {
+                                            VStack {
+                                                Text("Select Month")
+                                                    .font(.headline)
+                                                    .padding()
+
+                                                DatePicker(
+                                                    "",
+                                                    selection: $selectedMonth,
+                                                    in: ...Date(), // Limita la selezione a oggi e date precedenti
+                                                    displayedComponents: [.date]
+                                                )
+                                                .datePickerStyle(GraphicalDatePickerStyle())
+                                                .labelsHidden()
+                                                .frame(maxWidth: 300, maxHeight: 300)
+
+                                                Button("Close") {
+                                                    showCalendarPopup = false
+                                                }
+                                                .padding()
+                                            }
+                                            .frame(width: 350, height: 400)
+                                        }
+
+                                        Text(formattedMonthYear(from: selectedMonth))
                                             .font(.footnote)
                                             .foregroundColor(.gray)
                                     }
@@ -131,7 +168,7 @@ struct DashboardView: View {
             if budgetManager.showToast {
                 ToastView()
                     .transition(.move(edge: .top)) // Muove la notifica dall'alto
-                    .padding(.top, 100) // Aumentato per spostare più in alto
+                    .padding(.top, 60) // Posiziona la notifica più in alto
             }
         }
         .navigationViewStyle(.stack)
@@ -144,3 +181,4 @@ struct DashboardView_Previews: PreviewProvider {
             .environmentObject(BudgetManager()) // Passa l'oggetto BudgetManager come EnvironmentObject
     }
 }
+
