@@ -14,7 +14,7 @@ FinAIssistant is your smart financial companion, designed to help you track, man
 ## 📷 Screenshots
 
 <!-- Add image links here if you have them -->
-![Screenshot](path-to-your-image.png)
+![Screenshot](Preview%20Assets/screenshot1.png)
 
 ## 📖 How It Works
 
