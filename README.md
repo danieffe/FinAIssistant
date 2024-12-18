@@ -1,4 +1,4 @@
-# FinAIssistant
+# 💰 FinAIssistant
 
 FinAIssistant is your smart financial companion, designed to help you track, manage, and optimize your personal finances effortlessly. With user-friendly tools and intelligent insights, FinAIssistant empowers you to take control of your financial journey.
 
