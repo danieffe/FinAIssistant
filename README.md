@@ -73,4 +73,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 If you have any questions or feedback, feel free to reach out:
 
 - **GitHub**: [danieffe](https://github.com/danieffe)
-- **Email**: your-email@example.com
+- **Email**: danyfo00@gmail.com
