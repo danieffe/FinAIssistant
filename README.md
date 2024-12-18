@@ -13,9 +13,11 @@ FinAIssistant is your smart financial companion, designed to help you track, man
 
 ## 📷 Screenshots
 
+<div style="display: flex; gap: 10px;">
 <img src="FinAIssistant/Preview%20Content/Preview%20Assets.xcassets/Screenshots/DashboardView.imageset/DashboardView.png" width="200" />
 <img src="FinAIssistant/Preview%20Content/Preview%20Assets.xcassets/Screenshots/SettingsView.imageset/SettingsView.png" width="200" />
 <img src="FinAIssistant/Preview%20Content/Preview%20Assets.xcassets/Screenshots/NewExpenseView.imageset/NewExpenseView.png" width="200" />
+</div>
 
 ## 📖 How It Works
 
