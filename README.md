@@ -1,40 +1,76 @@
-# 💳 FinAIssistant
+# FinAIssistant
 
-**FinAIssistant** is your ultimate financial companion. Manage your monthly expenses, track category-wise spending, and gain actionable insights—all in one sleek, AI-powered app. Take control of your budget with visual dashboards, and stay financially aware without stress.
-
----
+FinAIssistant is your smart financial companion, designed to help you track, manage, and optimize your personal finances effortlessly. With user-friendly tools and intelligent insights, FinAIssistant empowers you to take control of your financial journey.
 
 ## 🚀 Features
 
-- **Expense Tracking**: Quickly add and manage expenses by category.
-- **Category Management**: Customize spending categories to suit your lifestyle.
-- **Intuitive Dashboard**: Visualize spending with a clean and modern interface.
-- **Historical Data Navigation**: Select previous months to analyze past spending patterns.
-- **Interactive Progress View**: Animated circular progress indicators to monitor spending at a glance.
-- **Distraction-Free UI**: Simple and effective design for seamless budgeting.
-
----
+- **Expense Tracking**: Log and categorize expenses with ease.
+- **Budget Management**: Set budgets and track your progress in real-time.
+- **Interactive Charts**: Visualize your spending habits with detailed charts and graphs.
+- **Custom Categories**: Personalize categories for a tailored experience.
+- **Smart Notifications**: Get timely reminders and insights to stay on track.
+- **Monthly Reports**: Receive comprehensive summaries of your financial activities.
 
 ## 📷 Screenshots
 
-| **Dashboard**                           | **Add Expense**                        | **Category Management**                 |
-|-----------------------------------------|----------------------------------------|-----------------------------------------|
-| ![Dashboard](https://github.com/danieffe/FinAIssistant/assets/dashboard.png) | ![Add Expense](https://github.com/danieffe/FinAIssistant/assets/add-expense.png) | ![Category Management](https://github.com/danieffe/FinAIssistant/assets/category-management.png) |
-
----
+<!-- Add image links here if you have them -->
+![Screenshot](path-to-your-image.png)
 
 ## 📖 How It Works
 
-1. **Add Categories**: Create personalized categories for your expenses.
-2. **Track Spending**: Record your expenses and assign them to categories.
-3. **Visualize Progress**: Monitor your spending with an intuitive progress view.
-4. **Analyze History**: Navigate through past months to understand financial trends.
-5. **Stay Notified**: Get in-app updates when you save changes or add data.
-
----
+1. **Log Expenses**: Add your expenses manually or import data.
+2. **Track Progress**: Monitor your budgets and financial goals in real-time.
+3. **Analyze Spending**: Use charts to identify patterns and areas for improvement.
+4. **Adjust & Optimize**: Modify budgets and strategies to achieve your financial goals.
 
 ## 🛠️ Installation
 
 1. Clone this repository:
-   ```bash
-   git clone https://github.com/danieffe/FinAIssistant.git
+
+    ```bash
+    git clone https://github.com/danieffe/FinAIssistant.git
+    ```
+
+2. Open the project in Xcode.
+
+3. Run the app on a simulator or a connected device.
+
+## 📅 Roadmap
+
+Future Features:
+
+- Bank account integration
+- AI-powered spending insights
+- Cross-platform support
+- Multi-currency support
+- Dark mode
+
+## 🧑‍💻 Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a new branch:
+
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+
+3. Commit your changes and push the branch:
+
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+
+4. Open a pull request.
+
+## 📜 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## ✉️ Contact
+
+If you have any questions or feedback, feel free to reach out:
+
+- **GitHub**: [danieffe](https://github.com/danieffe)
+- **Email**: your-email@example.com
